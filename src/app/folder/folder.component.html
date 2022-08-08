@@ -1,0 +1,9 @@
+<ul class="pl-8" *ngFor="let f of files">
+    <li *ngIf="f.files;else fname">
+        <p class="font-bold">- {{f.name}}</p>
+        <app-folder class="text-[0.85em]" [files]="f.files"></app-folder>
+    </li>
+    <ng-template #fname><li>
+        {{f.name}}
+    </li></ng-template>
+</ul>

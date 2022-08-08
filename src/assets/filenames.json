@@ -1,0 +1,19 @@
+[
+  {
+    "type":"file",
+    "media":"video",
+    "name":"vid1.mp4"
+  },
+  {
+    "type":"folder",
+    "media":"video",
+    "name":"topic1",
+    "files":[
+      {
+        "type":"file",
+        "media":"video",
+        "name":"vid2.mp4"
+      }
+    ]
+  }
+]
