@@ -1,0 +1,5 @@
+<div class="grid gap-2 grid-cols-4">
+    <app-content *ngIf="source!==undefined" [source]="source" class="h-fit col-span-3"></app-content>
+    <app-file-tree (fileClicked) = "showFile($event)"></app-file-tree>
+    
+</div>

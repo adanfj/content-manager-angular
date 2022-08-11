@@ -1,0 +1,9 @@
+<ul class="pl-8" *ngFor="let f of files">
+    <li *ngIf="f.files!='';else fname" class="cursor-pointer select-none">
+        <p (click)="triggerFold()" class="font-bold"><span *ngIf="!fold;else plus">-</span><ng-template #plus>+</ng-template> {{f.name}}</p>
+        <app-folder class="text-[0.85em]" [files]="f.files"></app-folder>
+    </li>
+    <ng-template #fname><li class="cursor-pointer select-none" (click)="showFile(f)">
+        {{f.name}}
+    </li></ng-template>
+</ul>
