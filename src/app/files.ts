@@ -4,12 +4,13 @@ export class FileName {
   parent: FileName | undefined;
   files: FileName[] = [];
   public media: string | undefined;
+  public fold: boolean = false;
   constructor(
     public name: string,
     files?: any,
     parent?: FileName,
   ) {
-    this.media = parent ? parent.media : name.toLowerCase().substring(0, name.length);
+    this.media = parent ? parent.media : name.toLowerCase().substring(0, name.length-1);
     this.parent = parent;
     if (files&&files !== '') {
       this.files = [...this.files, ...Object.keys(files).map(f => new FileName(f, files[f], this))]

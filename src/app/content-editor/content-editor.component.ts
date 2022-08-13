@@ -2,18 +2,17 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FileName } from '../files';
 
 @Component({
-  selector: 'app-content-viewer',
-  templateUrl: './content-viewer.component.html',
-  styleUrls: ['./content-viewer.component.css']
+  selector: 'app-content-editor',
+  templateUrl: './content-editor.component.html',
+  styleUrls: ['./content-editor.component.css']
 })
-export class ContentViewerComponent implements OnInit {
+export class ContentEditorComponent implements OnInit {
   @Input() public file!:FileName;
   constructor() { }
 
   ngOnInit(): void {
   }
   showFile(f:FileName){
-    this.file=f
+    
   }
-
 }

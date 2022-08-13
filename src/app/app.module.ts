@@ -10,6 +10,8 @@ import { FolderComponent } from './folder/folder.component';
 import { FileComponent } from './file/file.component';
 import { ContentComponent } from './content/content.component';
 import { HttpClientModule } from '@angular/common/http';
+import { ContentEditorComponent } from './content-editor/content-editor.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   imports: [
@@ -18,7 +20,9 @@ import { HttpClientModule } from '@angular/common/http';
     ReactiveFormsModule,
     RouterModule.forRoot([
       { path: '', component: ContentViewerComponent },
+      { path: 'editor', component: ContentEditorComponent },
     ]),
+    FontAwesomeModule,
   ],
   declarations: [
     AppComponent,
@@ -27,6 +31,7 @@ import { HttpClientModule } from '@angular/common/http';
     FolderComponent,
     FileComponent,
     ContentComponent,
+    ContentEditorComponent,
   ],
   bootstrap: [
     AppComponent

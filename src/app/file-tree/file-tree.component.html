@@ -1,3 +1,11 @@
-<app-folder (fileClicked)="showFile($event)" [files]="videos" class="text-xl">
+<app-folder [editable]="editable" (fileClicked)="handle($event)" [files]="documents" [selectedFile]="selectedFile" class="text-xl">
+
+</app-folder>
+
+<app-folder [editable]="editable" (fileClicked)="handle($event)" [files]="images" [selectedFile]="selectedFile" class="text-xl">
+
+</app-folder>
+
+<app-folder [editable]="editable" (fileClicked)="handle($event)" [files]="videos" [selectedFile]="selectedFile" class="text-xl">
 
 </app-folder>

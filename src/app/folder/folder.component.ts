@@ -1,37 +1,34 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { FileName } from '../files';
-
+import { faPencil, faTrash } from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'app-folder',
   templateUrl: './folder.component.html',
   styleUrls: ['./folder.component.css']
 })
 
-export class FolderComponent implements OnInit, OnChanges {
-
+export class FolderComponent implements OnInit {
+  editIcon = faPencil
+  removeIcon = faTrash
   @Input() files!: any;
-  @Output() fileClicked= new EventEmitter<FileName>(false);
-  public fold!: boolean;
+  @Input() public editable!:boolean;
+  @Input()  selectedFile!: FileName;
+  
+  @Output() fileClicked = new EventEmitter<FileName>();
+  
   constructor(
-    private http: HttpClient
   ) { }
-  ngOnChanges(changes: SimpleChanges): void {
-  }
 
   ngOnInit(): void {
-    this.fold = false;
-    this.fileClicked.emit(new FileName("2022-06-14 - Attack To Donetsk.mp4",undefined,new FileName("Videos"))); //Esta emisión funciona
+    //this.fold = false;
   }
 
-  triggerFold() {
-    this.fold = !this.fold;
+  triggerFold(f:FileName) {
+    f.fold = !f.fold;
   }
 
-  public showFile(f: any):void {
-    //console.log(f)
-    this.fileClicked.subscribe(console.table,console.error,console.log)
-    this.fileClicked.emit(f); //Esta queda ignorada
+  showFile(f: FileName) {
+    this.fileClicked.emit(f); 
   }
 }
