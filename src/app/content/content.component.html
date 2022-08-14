@@ -1,11 +1,11 @@
 <div class="overflow-auto {{file.media=='video'?'aspect-video':'h-screen'}}">
-    <iframe *ngIf="file.media!='image';else image" allow="fullscreen" width="100%" height="100%"
+    <iframe *ngIf="file.media=='document'" allow="fullscreen" width="100%" height="100%"
         [src]="urlSafe">
     </iframe>
-
-    <ng-template #image>
-        <img [src]="urlSafe" />
-    </ng-template>
+    <img *ngIf="file.media=='image'" [src]="urlSafe" />
+    <video (timeupdate)="handleTime($event)" #contentVideo *ngIf="file.media=='video'" width="100%" height="100%" controls autoplay>
+        <source [src]="urlSafe" type="video/mp4">
+    </video>
 </div>
 
 <div *ngIf="file.media=='video'&&editing" class="grid grid-cols-3 gap-2">
