@@ -1,14 +1,14 @@
 <div class="text-xl pr-4">
 
-    <app-folder [editable]="editable" (fileClicked)="handle($event)" [files]="documents">
+    <app-folder (onRefresh)="refresh()" [editable]="editable" (fileClicked)="handle($event)" [files]="documents">
     
     </app-folder>
     
-    <app-folder [editable]="editable" (fileClicked)="handle($event)" [files]="images" >
+    <app-folder (onRefresh)="refresh()" [editable]="editable" (fileClicked)="handle($event)" [files]="images" >
     
     </app-folder>
     
-    <app-folder [editable]="editable" (fileClicked)="handle($event)" [files]="videos" >
+    <app-folder (onRefresh)="refresh()" [editable]="editable" (fileClicked)="handle($event)" [files]="videos" >
     
     </app-folder>
 </div>

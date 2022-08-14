@@ -9,7 +9,7 @@ import { environment } from './../environments/environment';
 export class AppComponent implements OnInit {
   constructor(
     private http: HttpClient
-  ){}
+  ) { }
   ngOnInit(): void {
   }
 }

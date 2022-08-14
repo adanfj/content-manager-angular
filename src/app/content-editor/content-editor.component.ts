@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { faFile, faImage, faVideo } from '@fortawesome/free-solid-svg-icons';
+import { faFile, faImage, faUpload, faVideo } from '@fortawesome/free-solid-svg-icons';
 import { environment } from 'src/environments/environment';
 import { FileName } from '../files';
 
@@ -13,9 +13,12 @@ export class ContentEditorComponent implements OnInit {
   pdfIcon = faFile
   imgIcon = faImage
   videoIcon = faVideo
+  uploadIcon = faUpload
   videos!: any
   documents!: any
   images!: any
+  currentURL:string=""
+  currentTitle:string=""
   @Input() public file!: FileName;
   @Output() fileListUpdated = new EventEmitter()
   constructor(
@@ -24,6 +27,7 @@ export class ContentEditorComponent implements OnInit {
 
   ngOnInit(): void {
     this.refresh()
+    
   }
   refresh(){
     this.http.post(`${environment.apiURL}/videos`, JSON.stringify({ username: "root" }), {
@@ -59,5 +63,31 @@ export class ContentEditorComponent implements OnInit {
       .then(res=>this.refresh())
       .catch(console.error)
     }
+  }
+  processURL(t:any){
+    this.currentURL=t.value;
+  }
+  processTitle(t:any){
+    this.currentTitle=t.value;
+  }
+  prepareURLVideo(){
+    console.log(this.currentURL)
+    let code,media=""
+    if(this.currentURL.includes("youtube.com")){
+      code=this.currentURL.split("v=")[1]
+      media="/youtube"
+    }
+    if(this.currentURL.includes("youtu.be")){
+      code=this.currentURL.split(".be/")[1]
+      media="/youtube"
+    }
+    this.http.post(`${environment.apiURL}/prepare/video${media}`,JSON.stringify({
+      title:this.currentTitle,
+      code
+    }),{
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }).subscribe((r:any)=>{})
   }
 }

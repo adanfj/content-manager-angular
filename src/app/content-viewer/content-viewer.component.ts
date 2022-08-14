@@ -19,6 +19,7 @@ export class ContentViewerComponent implements OnInit {
 
   ngOnInit(): void {
     this.refresh()
+    setInterval(()=>this.refresh(),30000)
   }
   refresh(){
     this.http.post(`${environment.apiURL}/videos`, JSON.stringify({ username: "root" }), {

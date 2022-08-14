@@ -1,6 +1,6 @@
 <li class="select-none flex gap-2">
     <span *ngIf="!editing" class="cursor-pointer {{(selected)?'text-orange-300':'hover:text-orange-100'}}" (click)="showFile()" clickable>{{file.name.split(".")[0]}}</span>
-    <input *ngIf="editing" class="cursor-pointer w-full text-orange-600" (pointerleave)="triggerEdit()" [value]="file.name.split('.')[0]"/>
+    <input *ngIf="editing" class="cursor-pointer w-full text-orange-200 bg-gray-400 rounded-sm px-2" (pointerleave)="triggerEdit($event.target)" [value]="file.name.split('.')[0]"/>
     <span *ngIf="editable&&!editing" (click)="triggerEdit()"><fa-icon class="hover:text-orange-500" [icon]="editIcon"></fa-icon></span>
-    <span *ngIf="editable&&!editing"><fa-icon class="hover:text-red-500" [icon]="removeIcon"></fa-icon></span>
+    <span *ngIf="editable&&!editing" (click)="remove($event.target)"><fa-icon class="hover:text-red-500" [icon]="removeIcon"></fa-icon></span>
 </li>

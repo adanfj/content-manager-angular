@@ -9,24 +9,27 @@ import { FileName } from '../files';
 
 export class FolderComponent implements OnInit {
   @Input() files!: any;
-  @Input() public editable!:boolean;
-  @Input()  selectedFile!: FileName;
-  
+  @Input() public editable!: boolean;
+  @Input() selectedFile!: FileName;
+
   @Output() fileClicked = new EventEmitter<FileName>();
-  
+  @Output() onRefresh = new EventEmitter();
+
   constructor(
   ) { }
 
   ngOnInit(): void {
     //this.fold = false;
   }
-
-  triggerFold(f:FileName) {
+  refresh() {
+    this.onRefresh.emit("")
+  }
+  triggerFold(f: FileName) {
     f.fold = !f.fold;
   }
 
   showFile(f: FileName) {
     console.log(f)
-    this.fileClicked.emit(f); 
+    this.fileClicked.emit(f);
   }
 }

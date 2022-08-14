@@ -12,12 +12,15 @@ export class FileTreeComponent implements OnInit {
   @Input() images!: any
   @Input() public editable:boolean = false;
   @Output() fileClicked= new EventEmitter<FileName>();
+  @Output() onRefresh= new EventEmitter();
   
   constructor(
   ) { }
   ngOnInit(): void {
   }
-  
+  refresh(){
+    this.onRefresh.emit("")
+  }
   handle(f:any){
     console.log(f)
     this.fileClicked.emit(f);
