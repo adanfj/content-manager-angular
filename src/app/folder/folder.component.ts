@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { faFolder, faFolderClosed, faFolderOpen } from '@fortawesome/free-solid-svg-icons';
 import { environment } from 'src/environments/environment';
 import { FileName } from '../files';
 @Component({
@@ -14,7 +15,8 @@ export class FolderComponent implements OnInit {
 
   @Output() fileClicked = new EventEmitter<FileName>();
   @Output() onRefresh = new EventEmitter();
-
+  folderIcon = faFolderClosed
+  folderOpenIcon = faFolderOpen
   constructor(
   ) { }
 

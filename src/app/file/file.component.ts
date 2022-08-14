@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { faPencil, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faFile, faFileAlt, faFileArchive, faImage, faPaperPlane, faPencil, faTrash, faVideo, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { environment } from 'src/environments/environment';
 import { FileName } from '../files';
 
@@ -21,11 +21,15 @@ export class FileComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
+  getIcon(): IconDefinition {
+    if(this.file.media=="video")return faVideo
+    if(this.file.media=="image")return faImage
+    return faFileAlt
+  }
   showFile() {
     this.fileClicked.emit(this.file)
   }
-  remove(t:any){
+  remove(t: any) {
     fetch(`${environment.apiURL}/delete`, {
       method: "POST",
       headers: {
@@ -36,10 +40,10 @@ export class FileComponent implements OnInit {
       })
     }).then(res => {
       this.onRefresh.emit("")
-    }).catch(e=>this.onRefresh.emit(""))
-    
+    }).catch(e => this.onRefresh.emit(""))
+
   }
-  triggerEdit(t?:any) {
+  triggerEdit(t?: any) {
     this.editing = !this.editing
     if (!this.editing) {
       const newFile = new FileName(t.value + "." + this.file.name.split(".")[1], this.file.files, this.file.parent)
@@ -56,7 +60,7 @@ export class FileComponent implements OnInit {
         this.file = newFile
         this.onRefresh.emit("")
       })
-      
+
     }
   }
 }

@@ -1,9 +1,18 @@
-<ul class="pl-7" *ngFor="let f of files">
-    <li *ngIf="f.files!='' && f.files.length>0;else fname" class="cursor-pointer select-none">
-        <p (click)="triggerFold(f)" class="font-bold text-orange-500"><span *ngIf="!f.fold;else plus">-</span><ng-template #plus>+</ng-template> {{f.name}}</p>
-        <app-folder (onRefresh)="refresh()" [editable]="editable" (fileClicked)="showFile($event)" class="text-[0.85em]" [files]="!f.fold?f.files:[]"></app-folder>
+<ul class="pl-0 lg:pl-5" *ngFor="let f of files">
+    <li *ngIf="f.files!='' && f.files.length>0;else fname" class="select-none">
+        <p (click)="triggerFold(f)" [title]="f.name" class="cursor-pointer font-bold text-orange-500 truncate">
+            <fa-icon [icon]="folderOpenIcon" *ngIf="!f.fold;else plus"></fa-icon>
+            <ng-template #plus>
+                <fa-icon [icon]="folderIcon"></fa-icon>
+            </ng-template> 
+            <fa-icon ></fa-icon>
+            {{f.name}}
+        </p>
+        <app-folder (onRefresh)="refresh()" [editable]="editable" (fileClicked)="showFile($event)"
+            class="text-[0.85em] grid grid-cols-3 lg:grid-cols-1" [files]="!f.fold?f.files:[]"></app-folder>
     </li>
     <ng-template class="m-1" #fname>
-        <app-file (onRefresh)="refresh()" (fileClicked)="showFile(f)" *ngIf="f.name.split('.').length>1" [editable]="editable" [file]="f"></app-file>
+        <app-file (onRefresh)="refresh()" (fileClicked)="showFile(f)" *ngIf="f.name.split('.').length>1"
+            [editable]="editable" [file]="f"></app-file>
     </ng-template>
 </ul>
