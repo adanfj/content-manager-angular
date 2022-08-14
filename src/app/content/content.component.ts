@@ -1,5 +1,6 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { faUpload } from '@fortawesome/free-solid-svg-icons';
 import { FileName } from '../files';
 
 
@@ -13,7 +14,11 @@ import { FileName } from '../files';
 export class ContentComponent implements OnInit, OnChanges {
   @Input() public file!:FileName;
   @Input() public aspectRatio:string="";
-  public urlSafe!:SafeResourceUrl;
+  @Input() public editing:boolean=false;
+  topic!:string;
+  title!:string;
+  urlSafe!:SafeResourceUrl;
+  uploadIcon = faUpload
 
   constructor(public domSanitizer: DomSanitizer) { }
   ngOnChanges(changes: SimpleChanges): void {

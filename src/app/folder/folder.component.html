@@ -1,13 +1,9 @@
 <ul class="pl-7" *ngFor="let f of files">
     <li *ngIf="f.files!='' && f.files.length>0;else fname" class="cursor-pointer select-none">
         <p (click)="triggerFold(f)" class="font-bold text-orange-500"><span *ngIf="!f.fold;else plus">-</span><ng-template #plus>+</ng-template> {{f.name}}</p>
-        <app-folder (fileClicked)="showFile($event)" class="text-[0.85em]" [files]="!f.fold?f.files:[]"></app-folder>
+        <app-folder [editable]="editable" (fileClicked)="showFile($event)" class="text-[0.85em]" [files]="!f.fold?f.files:[]"></app-folder>
     </li>
     <ng-template class="m-1" #fname>
-        <li *ngIf="f.name.split('.').length>1" class="select-none ">
-            <span class="cursor-pointer {{(selectedFile&&f.getURL()===selectedFile.getURL())?'text-orange-300':'hover:text-orange-100'}}" (click)="showFile(f)" clickable>{{f.name.split(".")[0]}}</span>
-            <span><fa-icon [icon]="editIcon"></fa-icon></span>
-            <span><fa-icon [icon]="removeIcon"></fa-icon></span>
-        </li>
+        <app-file (fileClicked)="showFile(f)" *ngIf="f.name.split('.').length>1" [editable]="editable" [file]="f"></app-file>
     </ng-template>
 </ul>

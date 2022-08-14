@@ -7,3 +7,11 @@
         <img [src]="urlSafe" />
     </ng-template>
 </div>
+
+<div *ngIf="file.media=='video'&&editing" class="grid grid-cols-3 gap-2">
+<input type="time">
+<input type="text" placeholder="Title..." [value]="title">
+<input type="time">
+<input type="text" class="col-start-2 col-end-3" placeholder="Topic..." [value]="topic">
+<button><fa-icon [icon]="uploadIcon"></fa-icon></button>
+</div>

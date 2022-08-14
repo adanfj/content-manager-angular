@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { FileName } from '../files';
-import { faPencil, faTrash } from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'app-folder',
   templateUrl: './folder.component.html',
@@ -9,8 +8,6 @@ import { faPencil, faTrash } from '@fortawesome/free-solid-svg-icons';
 })
 
 export class FolderComponent implements OnInit {
-  editIcon = faPencil
-  removeIcon = faTrash
   @Input() files!: any;
   @Input() public editable!:boolean;
   @Input()  selectedFile!: FileName;
@@ -29,6 +26,7 @@ export class FolderComponent implements OnInit {
   }
 
   showFile(f: FileName) {
+    console.log(f)
     this.fileClicked.emit(f); 
   }
 }

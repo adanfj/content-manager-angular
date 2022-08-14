@@ -1,6 +1,9 @@
 <div class="grid gap-2 grid-cols-5">
-    <app-content *ngIf="file!==undefined" [file]="file" class="h-fit col-span-3"></app-content>
-    <!-- <app-file-tree></app-file-tree> -->
-    <app-file-tree (fileClicked) = "showFile($event)" class="h-screen overflow-y-auto col-span-2"></app-file-tree>
+    <app-content [editing]="false" *ngIf="file!==undefined" [file]="file" class="h-fit col-start-1 col-end-4"></app-content>
+    <app-file-tree (fileClicked) = "showFile($event)" 
+    [videos]="videos"
+    [images]="images"
+    [documents]="documents"
+    class="h-screen overflow-y-auto col-start-4 col-end-6"></app-file-tree>
     
 </div>

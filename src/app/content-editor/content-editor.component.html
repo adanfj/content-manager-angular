@@ -1,6 +1,22 @@
+<div class="my-2 flex gap-2">
+    <div class="px-2 py-1 bg-orange-500 shadow-md hover:bg-orange-600 border-orange-100 rounded-sm relative">
+        <fa-icon [icon]="pdfIcon"></fa-icon>
+        <input (change)="upload($event.target,'document')" type="file" accept=".pdf" class="opacity-0 absolute top-0 left-0 h-full w-full"/>
+    </div>
+    <div class="px-2 py-1 bg-orange-500 shadow-md hover:bg-orange-600 border-orange-100 rounded-sm relative">
+        <fa-icon [icon]="imgIcon"></fa-icon>
+        <input (change)="upload($event.target,'image')" type="file" accept="image/*" class="opacity-0 absolute top-0 left-0 h-full w-full"/>
+    </div>
+    <div class="px-2 py-1 bg-orange-500 shadow-md hover:bg-orange-600 border-orange-100 rounded-sm relative">
+        <fa-icon [icon]="videoIcon"></fa-icon>
+        <input (change)="upload($event.target,'video')" type="file" accept="video/*" class="opacity-0 absolute top-0 left-0 h-full w-full"/>
+    </div>
+</div>
 <div class="grid gap-2 grid-cols-5">
-    <app-content *ngIf="file!==undefined" [file]="file" class="h-fit col-span-3"></app-content>
-    <!-- <app-file-tree></app-file-tree> -->
-    <app-file-tree [editable]="true" (fileClicked) = "showFile($event)" class="h-screen overflow-y-auto col-span-2"></app-file-tree>
-    
+    <app-content [editing]="true" *ngIf="file!==undefined" [file]="file" class="h-fit col-span-3"></app-content>
+    <app-file-tree [editable]="true" (fileClicked)="showFile($event)"
+    [videos]="videos"
+    [images]="images"
+    [documents]="documents"
+        class="h-screen overflow-y-auto col-start-4 col-end-6"></app-file-tree>
 </div>
