@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { faFile, faImage, faUpload, faVideo } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faArrowRight, faBars, faFile, faImage, faUpload, faVideo } from '@fortawesome/free-solid-svg-icons';
 import { environment } from 'src/environments/environment';
 import { FileName } from '../files';
 
@@ -10,15 +10,19 @@ import { FileName } from '../files';
   styleUrls: ['./content-editor.component.css']
 })
 export class ContentEditorComponent implements OnInit {
+  menuIcon = faBars
   pdfIcon = faFile
   imgIcon = faImage
   videoIcon = faVideo
   uploadIcon = faUpload
+  leftIcon = faArrowLeft
+  rightIcon = faArrowRight
   videos!: any
   documents!: any
   images!: any
   currentURL:string=""
   currentTitle:string=""
+  fileTreeVisiblePortable:boolean=false
   @Input() public file!: FileName;
   @Output() fileListUpdated = new EventEmitter()
   constructor(
@@ -51,6 +55,7 @@ export class ContentEditorComponent implements OnInit {
   }
   showFile(f: FileName) {
     this.file = f
+    this.fileTreeVisiblePortable=false;
   }
   upload(e: any, type: string) {
     for (const f of e.files) {
@@ -69,6 +74,9 @@ export class ContentEditorComponent implements OnInit {
   }
   processTitle(t:any){
     this.currentTitle=t.value;
+  }
+  triggerTree(){
+    this.fileTreeVisiblePortable=!this.fileTreeVisiblePortable
   }
   prepareURLVideo(){
     console.log(this.currentURL)
