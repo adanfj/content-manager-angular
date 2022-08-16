@@ -1,6 +1,7 @@
 import { Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { faUpload } from '@fortawesome/free-solid-svg-icons';
+import { environment } from 'src/environments/environment';
 import { FileName } from '../files';
 
 
@@ -16,8 +17,11 @@ export class ContentComponent implements OnInit, OnChanges {
   @Input() public aspectRatio: string = "";
   @Input() public editing: boolean = false;
   @ViewChild("contentVideo") contentVideo!: ElementRef;
-  topic!: string;
-  title!: string;
+  topic: string="";
+  title: string="";
+  updateTime:string="end";
+  startTime:number=0.0;
+  endTime:number=0.0;
   urlSafe!: SafeResourceUrl;
   uploadIcon = faUpload
 
@@ -34,10 +38,37 @@ export class ContentComponent implements OnInit, OnChanges {
     else this.aspectRatio = ""
   }
   ngOnInit(): void {
-
+    document.getElementById("start")?.setAttribute("value","00:00:00.00")
+    document.getElementById("end")?.setAttribute("value","00:00:00.00")
   }
   handleTime(e: any) {
-    console.log(e.target);
+    document.getElementById(this.updateTime)?.setAttribute("value",new Date(e.currentTime*1000).toISOString().substring(11,22))
+    
+  }
+  autoTime(c:string){
+    this.updateTime=c
+  }
+  processTitle(t:any){
+    this.title=t.value
+  }
+  processTopic(t:any){
+    this.topic=t.value
+  }
+  uploadSnippet(){
+    console.log(this.file)
+    fetch(`${environment.apiURL}/split/video`,{
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body:JSON.stringify({
+        filename:this.file.getFullName(),
+        startTime:new Date(this.startTime*1000).toISOString().substring(11,22),
+        endTime:new Date(this.endTime*1000).toISOString().substring(11,22),
+        topic:this.topic,
+        title:this.title
+      })
+    })
   }
 
 }
