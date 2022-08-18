@@ -59,6 +59,9 @@ export class FileComponent implements OnInit {
       }).then(res => {
         this.file = newFile
         this.onRefresh.emit("")
+      }).catch(e=>{
+        this.file = newFile
+        this.onRefresh.emit("")
       })
 
     }

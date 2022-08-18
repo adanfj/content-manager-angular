@@ -1,20 +1,22 @@
-<div class="my-2 flex justify-center xl:justify-start gap-2 h-fit">
-    <div class="px-2 py-1 bg-orange-500 shadow-md hover:bg-orange-600 border-orange-100 rounded-sm relative">
-        <fa-icon [icon]="pdfIcon"></fa-icon>
-        <input (change)="upload($event.target,'document')" type="file" accept=".pdf"
-            class="opacity-0 absolute top-0 left-0 h-full w-full" />
+<div class="my-2 flex flex-col sm:flex-row justify-center xl:justify-start gap-2 h-fit">
+    <div class="flex justify-center gap-2">
+        <div class="px-2 py-1 bg-orange-500 shadow-md hover:bg-orange-600 border-orange-100 rounded-sm relative">
+            <fa-icon [icon]="pdfIcon"></fa-icon>
+            <input (change)="upload($event.target,'document')" type="file" accept=".pdf"
+                class="opacity-0 absolute top-0 left-0 h-full w-full" />
+        </div>
+        <div class="px-2 py-1 bg-orange-500 shadow-md hover:bg-orange-600 border-orange-100 rounded-sm relative">
+            <fa-icon [icon]="imgIcon"></fa-icon>
+            <input (change)="upload($event.target,'image')" type="file" accept="image/*"
+                class="opacity-0 absolute top-0 left-0 h-full w-full" />
+        </div>
+        <div class="px-2 py-1 bg-orange-500 shadow-md hover:bg-orange-600 border-orange-100 rounded-sm relative">
+            <fa-icon [icon]="videoIcon"></fa-icon>
+            <input (change)="upload($event.target,'video')" type="file" accept="video/*"
+                class="opacity-0 absolute top-0 left-0 h-full w-full" />
+        </div>
     </div>
-    <div class="px-2 py-1 bg-orange-500 shadow-md hover:bg-orange-600 border-orange-100 rounded-sm relative">
-        <fa-icon [icon]="imgIcon"></fa-icon>
-        <input (change)="upload($event.target,'image')" type="file" accept="image/*"
-            class="opacity-0 absolute top-0 left-0 h-full w-full" />
-    </div>
-    <div class="px-2 py-1 bg-orange-500 shadow-md hover:bg-orange-600 border-orange-100 rounded-sm relative">
-        <fa-icon [icon]="videoIcon"></fa-icon>
-        <input (change)="upload($event.target,'video')" type="file" accept="video/*"
-            class="opacity-0 absolute top-0 left-0 h-full w-full" />
-    </div>
-    <div class="w-[1px] bg-gray-800 rounded-full shadow-md"></div>
+    <div class="hidden sm:block w-[1px] bg-gray-800 rounded-full shadow-md"></div>
     <input type="url" class="bg-gray-400 rounded-sm px-2" [value]="currentURL" (input)="processURL($event.target)">
     <input type="url" class="bg-gray-400 rounded-sm px-2" [value]="currentTitle" (input)="processTitle($event.target)">
     <button class="px-2 py-1 bg-orange-500 shadow-md hover:bg-orange-600 border-orange-100 rounded-sm relative"
@@ -22,10 +24,11 @@
         <fa-icon [icon]="uploadIcon"></fa-icon>
     </button>
 </div>
-<div class="grid gap-2 grid-cols-5 mb-5">
-    <app-content [editing]="true" *ngIf="file!==undefined" [file]="file" class="h-fit col-span-full xl:col-span-3"></app-content>
+
+<div class="grid gap-2 grid-cols-5 mb-5 h-full">
+    <app-content (onRefresh)="refresh()" [editing]="true" *ngIf="file!==undefined" [file]="file" class="h-fit col-span-full xl:col-span-3"></app-content>
     <app-file-tree [editable]="true" (onRefresh)="refresh()" (fileClicked)="showFile($event)" [videos]="videos" [images]="images"
-        [documents]="documents" class="h-screen overflow-y-auto col-start-4 col-end-6 fixed {{fileTreeVisiblePortable?'top-0':'top-full'}} transition-all bg-zinc-700 w-full xl:top-0 xl:relative xl:block xl:bg-transparent"></app-file-tree>
+        [documents]="documents" class="h-screen overflow-y-auto col-start-4 col-end-6 fixed {{fileTreeVisiblePortable?'top-0':'top-full'}} transition-all bg-zinc-700 pt-2 px-2 md:pt-0 md:px-0 w-full xl:w-full xl:h-full pb-28 xl:top-0 left-0 xl:relative xl:block xl:bg-transparent"></app-file-tree>
     <div class="fixed bottom-0 left-0 xl:hidden w-screen flex justify-center">
         <div class="text-4xl bg-gray-800 flex gap-2 px-2 py-1 items-center">
             <fa-icon class="text-[0.7em]" [icon]="leftIcon"></fa-icon>

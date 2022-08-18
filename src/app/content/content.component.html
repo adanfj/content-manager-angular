@@ -1,19 +1,32 @@
-<div class="overflow-auto {{file.media=='video'?'aspect-video':'h-screen'}}">
-    <iframe *ngIf="file.media=='document'" allow="fullscreen" width="100%" height="100%"
-        [src]="urlSafe">
+<div class="overflow-auto {{file.media=='video'?'':'h-screen'}}">
+    <iframe *ngIf="file.media=='document'" allow="fullscreen" width="100%" height="100%" [src]="urlSafe">
     </iframe>
     <img *ngIf="file.media=='image'" [src]="urlSafe" />
-    <video (timeupdate)="handleTime($event.target)" #contentVideo *ngIf="file.media=='video'" width="100%" height="100%" controls autoplay>
+    <video (timeupdate)="handleTime($event.target)" #contentVideo *ngIf="file.media=='video'" width="100%" height="100%"
+        controls autoplay>
         <source [src]="urlSafe" type="video/mp4">
     </video>
 </div>
 
 <div *ngIf="file.media=='video'&&editing" class="grid grid-cols-3 gap-2">
-<input class="text-orange-200 font-bold bg-gray-400 rounded-sm px-2" id="start" type="text" (click)="autoTime('start')" readonly>
-<input class="text-orange-200 font-bold bg-gray-400 rounded-sm px-2" type="text" placeholder="Title..." [value]="title" (input)="processTitle($event.target)">
-<input class="text-orange-200 font-bold bg-gray-400 rounded-sm px-2" id="end" type="text" (click)="autoTime('end')" readonly>
-<input class="text-orange-200 font-bold bg-gray-400 rounded-sm px-2 col-start-2 col-end-3" type="text" placeholder="Topic..." [value]="topic" (input)="processTopic($event.target)">
-<button class="hover:text-orange-100 bg-gray-400 rounded-sm w-min px-2 justify-self-end"
-(click)="uploadSnippet()"
-><fa-icon [icon]="uploadIcon"></fa-icon></button>
+    <input class="text-orange-200 font-bold bg-gray-400 rounded-sm px-2" id="start" type="text"
+        (click)="autoTime('start')" readonly>
+    <input
+        class="placeholder:text-orange-100 placeholder:opacity-40 text-orange-200 font-bold bg-gray-400 rounded-sm px-2"
+        type="text" placeholder="Title..." [value]="title" (input)="processTitle($event.target)">
+    <input class=" text-orange-200 font-bold bg-gray-400 rounded-sm px-2" id="end" type="text" (click)="autoTime('end')"
+        readonly>
+    <input
+        class="placeholder:text-orange-100 placeholder:opacity-40 text-orange-200 font-bold bg-gray-400 rounded-sm px-2 col-start-2 col-end-3"
+        type="text" placeholder="Topic..." [value]="topic" (input)="processTopic($event.target)">
+    <button *ngIf="startTime<endTime&&title.length>0&&topic.length>0;else disabledUpload"
+        class="hover:text-orange-100 bg-gray-400 rounded-sm w-min px-2 justify-self-end" (click)="uploadSnippet()">
+        <fa-icon [icon]="uploadIcon"></fa-icon>
+    </button>
+    <ng-template #disabledUpload>
+        <button 
+            class="opacity-30 bg-gray-400 rounded-sm w-min px-2 justify-self-end" disabled>
+            <fa-icon [icon]="uploadIcon"></fa-icon>
+        </button>
+    </ng-template>
 </div>

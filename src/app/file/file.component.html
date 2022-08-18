@@ -3,18 +3,19 @@
     <div class="flex gap-2">
         <fa-icon class="opacity-60" *ngIf="!editing" [icon]="getIcon()"></fa-icon>
         <span [title]="file.name" *ngIf="!editing"
-            class="cursor-pointer truncate {{(selected)?'text-orange-300':'hover:text-orange-100'}}  font-bold"
+            class="cursor-pointer md:truncate {{(selected)?'text-orange-300':'hover:text-orange-100'}}  font-bold"
             (click)="showFile()" (dblclick)="triggerEdit()" clickable>{{file.name.split(".")[0]}}</span>
         <input *ngIf="editing" class="w-full text-orange-200 font-bold bg-gray-400 rounded-sm px-2"
-            (pointerleave)="triggerEdit($event.target)" [value]="file.name.split('.')[0]" />
+            (keyup)="triggerEdit($event)" [value]="file.name.split('.')[0]" />
+        <span *ngIf="editable&&!editing" (click)="triggerEdit()">
+            <fa-icon class="hover:text-orange-500" [icon]="editIcon"></fa-icon>
+        </span>
         <span *ngIf="editable&&!editing" (click)="remove($event.target)">
             <fa-icon class="hover:text-red-500 cursor-pointer" [icon]="removeIcon"></fa-icon>
         </span>
     </div>
     <li class="select-none flex gap-2 justify-center">
-        <!-- <span *ngIf="editable&&!editing" (click)="triggerEdit()">
-            <fa-icon class="hover:text-orange-500" [icon]="editIcon"></fa-icon>
-        </span> -->
+
 
     </li>
 </div>
