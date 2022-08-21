@@ -12,10 +12,12 @@ import { ContentComponent } from './content/content.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ContentEditorComponent } from './content-editor/content-editor.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { PdfJsViewerModule } from 'ng2-pdfjs-viewer';
 
 @NgModule({
   imports: [
     BrowserModule,
+    PdfJsViewerModule,
     HttpClientModule,
     ReactiveFormsModule,
     RouterModule.forRoot([

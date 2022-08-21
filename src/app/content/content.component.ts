@@ -1,6 +1,8 @@
 import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { faUpload } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faSearchMinus, faSearchPlus, faUpload } from '@fortawesome/free-solid-svg-icons';
+import { getDocument } from 'pdfjs-dist';
+
 import { environment } from 'src/environments/environment';
 import { FileName } from '../files';
 
@@ -22,11 +24,16 @@ export class ContentComponent implements OnInit, OnChanges {
   updateTime: string = "end";
   startTime: number = 0.0;
   endTime: number = 0.0;
+  pdfPages = 0
+  zoom: number = 1.0
   urlSafe!: SafeResourceUrl;
   uploadIcon = faUpload
+  zoomInIcon = faSearchPlus
+  zoomOutIcon = faSearchMinus
   @Output() onRefresh = new EventEmitter();
   constructor(public domSanitizer: DomSanitizer) { }
-  ngOnChanges(changes: SimpleChanges): void {
+  async ngOnChanges(changes: SimpleChanges | null) {
+
     this.urlSafe = this.domSanitizer.bypassSecurityTrustResourceUrl(this.file.getURL());
     if (this.file.media == "video") {
       this.aspectRatio = "aspect-video"
@@ -36,10 +43,14 @@ export class ContentComponent implements OnInit, OnChanges {
       }
     }
     else this.aspectRatio = ""
+    if (this.file.media == "document") {
+      
+    }
   }
   ngOnInit(): void {
     document.getElementById("start")?.setAttribute("value", "00:00:00.00")
     document.getElementById("end")?.setAttribute("value", "00:00:00.00")
+
   }
   handleTime(e: any) {
     document.getElementById(this.updateTime)?.setAttribute("value", new Date(e.currentTime * 1000).toISOString().substring(11, 22))
@@ -55,8 +66,10 @@ export class ContentComponent implements OnInit, OnChanges {
   processTopic(t: any) {
     this.topic = t.value
   }
+  modifyZoom(z: number) {
+    this.zoom *= z
+  }
   uploadSnippet() {
-    console.log(this.file)
     fetch(`${environment.apiURL}/split/video`, {
       method: "POST",
       headers: {

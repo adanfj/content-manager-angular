@@ -44,9 +44,11 @@ export class FileComponent implements OnInit {
 
   }
   triggerEdit(t?: any) {
+    if(t&&t.key!="Enter")return
+
     this.editing = !this.editing
     if (!this.editing) {
-      const newFile = new FileName(t.value + "." + this.file.name.split(".")[1], this.file.files, this.file.parent)
+      const newFile = new FileName(t.target.value + "." + this.file.name.split(".")[1], this.file.files, this.file.parent)
       fetch(`${environment.apiURL}/rename`, {
         method: "POST",
         headers: {

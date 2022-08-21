@@ -1,9 +1,21 @@
-<div class="grid gap-2 grid-cols-5">
-    <app-content [editing]="false" *ngIf="file!==undefined" [file]="file" class="h-fit col-start-1 col-end-4"></app-content>
-    <app-file-tree (fileClicked) = "showFile($event)" 
-    [videos]="videos"
-    [images]="images"
-    [documents]="documents"
-    class="h-screen overflow-y-auto col-start-4 col-end-6"></app-file-tree>
-    
+<div class="my-2 flex flex-col sm:flex-row justify-center xl:justify-start gap-2 h-fit">
+    <div class="flex justify-center gap-2">
+        <button class="px-2 py-1 bg-orange-500 shadow-md hover:bg-orange-600 border-orange-100 rounded-sm relative"
+            (click)="goToEditor()">
+            <fa-icon [icon]="gotoEditorIcon"></fa-icon>
+        </button>
+    </div>
+</div>
+
+<div class="grid gap-2 grid-cols-5 mb-5 h-full">
+    <app-content (onRefresh)="refresh()" [editing]="false" *ngIf="file!==undefined" [file]="file" class="h-fit col-span-full xl:col-span-3"></app-content>
+    <app-file-tree [editable]="false" (onRefresh)="refresh()" (fileClicked)="showFile($event)" [videos]="videos" [images]="images"
+        [documents]="documents" class="h-screen overflow-y-auto col-start-4 col-end-6 fixed {{fileTreeVisiblePortable?'top-0':'top-full'}} transition-all bg-zinc-700 pt-2 px-2 md:pt-0 md:px-0 w-full xl:w-full xl:h-full pb-28 xl:top-0 left-0 xl:relative xl:block xl:bg-transparent"></app-file-tree>
+    <div class="fixed bottom-0 left-0 xl:hidden w-screen flex justify-center">
+        <div class="text-4xl bg-gray-800 flex gap-2 px-2 py-1 items-center">
+            <fa-icon class="text-[0.7em]" [icon]="leftIcon"></fa-icon>
+            <fa-icon (click)="triggerTree()" class="bg-gray-700 rounded-sm shadow-md px-2 py-1 cursor-pointer" [icon]="menuIcon"></fa-icon>
+            <fa-icon class="text-[0.7em]" [icon]="rightIcon"></fa-icon>
+        </div>
+    </div>
 </div>

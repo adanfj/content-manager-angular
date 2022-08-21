@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { faArrowLeft, faArrowRight, faBars, faFile, faImage, faUpload, faVideo } from '@fortawesome/free-solid-svg-icons';
+import { Router } from '@angular/router';
+import { faArrowLeft, faArrowRight, faBars, faFile, faImage, faRotateBackward, faUpload, faVideo } from '@fortawesome/free-solid-svg-icons';
 import { environment } from 'src/environments/environment';
 import { FileName } from '../files';
 
@@ -17,23 +18,26 @@ export class ContentEditorComponent implements OnInit {
   uploadIcon = faUpload
   leftIcon = faArrowLeft
   rightIcon = faArrowRight
+  goBackIcon = faRotateBackward
   videos!: any
   documents!: any
   images!: any
-  currentURL:string=""
-  currentTitle:string=""
-  fileTreeVisiblePortable:boolean=false
+  currentURL: string = ""
+  currentTitle: string = ""
+  fileTreeVisiblePortable: boolean = false
   @Input() public file!: FileName;
   @Output() fileListUpdated = new EventEmitter()
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private _router: Router
   ) { }
 
   ngOnInit(): void {
     this.refresh()
-    
+    // setInterval(()=>this.refresh(),10000)
+
   }
-  refresh(){
+  refresh() {
     this.http.post(`${environment.apiURL}/videos`, JSON.stringify({ username: "root" }), {
       headers: {
         "Content-Type": "application/json"
@@ -55,47 +59,52 @@ export class ContentEditorComponent implements OnInit {
   }
   showFile(f: FileName) {
     this.file = f
-    this.fileTreeVisiblePortable=false;
+    this.fileTreeVisiblePortable = false;
   }
-  upload(e: any, type: string) {
+  goToViewer() {
+    this._router.navigateByUrl('/')
+  }
+  async upload(e: any, type: string) {
+    let formData = new FormData();
+    console.log(e.files)
     for (const f of e.files) {
-      let formData = new FormData();
-      formData.append(e.value, f)
-      fetch(environment.apiURL + "/" + type, {
-        method: "POST",
-        body: formData
-      })
-      .then(res=>this.refresh())
-      .catch(console.error)
+      console.log(f.name)
+      formData.append(f.name, f)
     }
+    const res = await fetch(`${environment.apiURL}/${type}`, {
+      method: "POST",
+      body: formData
+    })
+    console.log(res)
+    this.refresh()
   }
-  processURL(t:any){
-    this.currentURL=t.value;
+  processURL(t: any) {
+    this.currentURL = t.value;
   }
-  processTitle(t:any){
-    this.currentTitle=t.value;
+  processTitle(t: any) {
+    this.currentTitle = t.value;
   }
-  triggerTree(){
-    this.fileTreeVisiblePortable=!this.fileTreeVisiblePortable
+  triggerTree() {
+    this.fileTreeVisiblePortable = !this.fileTreeVisiblePortable
   }
-  prepareURLVideo(){
+  prepareURLVideo() {
     console.log(this.currentURL)
-    let code,media=""
-    if(this.currentURL.includes("youtube.com")){
-      code=this.currentURL.split("v=")[1]
-      media="/youtube"
+    let code, media = ""
+    if (this.currentURL.includes("youtube.com")) {
+      code = this.currentURL.split("v=")[1]
+      media = "/youtube"
     }
-    if(this.currentURL.includes("youtu.be")){
-      code=this.currentURL.split(".be/")[1]
-      media="/youtube"
+    if (this.currentURL.includes("youtu.be")) {
+      code = this.currentURL.split(".be/")[1]
+      media = "/youtube"
     }
-    this.http.post(`${environment.apiURL}/prepare/video${media}`,JSON.stringify({
-      title:this.currentTitle,
+    this.http.post(`${environment.apiURL}/prepare/video${media}`, JSON.stringify({
+      title: this.currentTitle,
       code
-    }),{
+    }), {
       headers: {
         "Content-Type": "application/json"
       }
-    }).subscribe((r:any)=>{})
+    }).subscribe((r: any) => { })
   }
 }
