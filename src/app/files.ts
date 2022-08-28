@@ -13,7 +13,7 @@ export class FileName {
     this.media = parent ? parent.media : name.toLowerCase().substring(0, name.length-1);
     this.parent = parent;
     if (files&&files !== '') {
-      this.files = [...this.files, ...Object.keys(files).map(f => new FileName(f, files[f], this))]
+      this.files = [...this.files, ...Object.keys(files).map(f => new FileName(f, files[f], this))].sort((a,b)=>a.name<b.name?-1:a.name>b.name?1:0)
     }
   }
   getFullName(): string {

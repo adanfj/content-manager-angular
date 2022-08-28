@@ -28,6 +28,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.1.2",
     "@types/pdfjs-dist": "^2.10.378",
     "angular-in-memory-web-api": "~0.14.0",
+    "ng2-pdf-viewer": "^9.1.0",
     "ng2-pdfjs-viewer": "^13.2.2",
     "pdfjs-dist": "^2.15.349",
     "rxjs": "~7.5.0",

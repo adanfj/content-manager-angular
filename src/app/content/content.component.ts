@@ -1,10 +1,12 @@
 import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { faSearch, faSearchMinus, faSearchPlus, faUpload } from '@fortawesome/free-solid-svg-icons';
-import { getDocument } from 'pdfjs-dist';
+import { PdfJsViewerComponent } from 'ng2-pdfjs-viewer';
+
 
 import { environment } from 'src/environments/environment';
 import { FileName } from '../files';
+
 
 
 @Component({
@@ -19,6 +21,8 @@ export class ContentComponent implements OnInit, OnChanges {
   @Input() public aspectRatio: string = "";
   @Input() public editing: boolean = false;
   @ViewChild("contentVideo") contentVideo!: ElementRef;
+  @ViewChild("pdfViewerOnDemand") contentPDF:any;
+  stringToSearch = 'hi';
   topic: string = "";
   title: string = "";
   updateTime: string = "end";
@@ -32,6 +36,7 @@ export class ContentComponent implements OnInit, OnChanges {
   zoomOutIcon = faSearchMinus
   @Output() onRefresh = new EventEmitter();
   constructor(public domSanitizer: DomSanitizer) { }
+  
   async ngOnChanges(changes: SimpleChanges | null) {
 
     this.urlSafe = this.domSanitizer.bypassSecurityTrustResourceUrl(this.file.getURL());
@@ -43,8 +48,8 @@ export class ContentComponent implements OnInit, OnChanges {
       }
     }
     else this.aspectRatio = ""
-    if (this.file.media == "document") {
-      
+    if (this.file.media == "document" && this.contentPDF) {
+      this.contentPDF.refresh();
     }
   }
   ngOnInit(): void {
